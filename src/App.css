@@ -2,3 +2,12 @@
   background-color: #008000;
   color: #ffffff;
 }
+
+.letter_current-err {
+  background-color: #ff0000;
+  color: #ffffff;
+}
+
+.letter_passed {
+  color: #008000;
+}
