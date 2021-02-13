@@ -1,7 +1,7 @@
 import React from "react";
-import "./App.css";
 import { testText } from "./testText";
-import Letter from "./Letter.js";
+import Popup from "./Popup.js";
+import Training from "./Training.js";
 
 class App extends React.Component {
   constructor() {
@@ -17,25 +17,45 @@ class App extends React.Component {
   }
 
   handleKeyup(evt) {
+    if (this.checkKkeyModifier(evt)) return;
+
+    if (this.checkKkeyRu(evt)) {
+      console.log("Поменяйте раскладку");
+      return;
+    }
+
+    if (this.checkKkeyRu(evt)) return;
+    if (this.checkKkeyErr(evt)) return;
+
+    this.setState((state) => {
+      return { countLetter: state.countLetter + 1, letterErr: -1 };
+    });
+  }
+
+  checkKkeyModifier(evt) {
+    return evt.key.length > 1;
+  }
+
+  checkKkeyRu(evt) {
+    return /[А-яа-яЁё]/.test(evt.key);
+  }
+
+  checkKkeyErr(evt) {
     if (evt.key !== this.state.arrayOfLetters[this.state.countLetter]) {
       this.setState((state) => {
         return { letterErr: state.countLetter, countErr: state.countErr + 1 };
       });
-      console.log(this.state.countErr);
-    }
-    if (evt.key === this.state.arrayOfLetters[this.state.countLetter]) {
-      this.setState((state) => {
-        return { countLetter: state.countLetter + 1, letterErr: -1 };
-      });
+      return true;
     }
   }
 
   handleStarting() {
     const startData = new Date();
     let timerId = setInterval(() => {
-      const currentDate = new Date();
+      let currentDate = new Date();
       const printSpeed = Math.round(this.state.countLetter / ((+currentDate - +startData) / 60000));
       this.setState({ printSpeed: printSpeed });
+      console.log(this.state.printSpeed);
     }, 1000);
   }
 
@@ -60,21 +80,14 @@ class App extends React.Component {
   render() {
     return (
       <>
-        {this.state.arrayOfLetters.map((letter, i) => (
-          <Letter
-            key={i}
-            letter={letter}
-            countLetter={this.state.countLetter}
-            letterErr={this.state.letterErr}
-            index={i}
-          ></Letter>
-        ))}
-        <button onClick={this.handleStarting.bind(this)}>Старт</button>
-        <p>Скорость {this.state.printSpeed}</p>
-        <p>
-          точность
-          {100 - ((this.state.countErr / this.state.arrayOfLetters.length) * 100).toFixed(2)}
-        </p>
+        <Popup></Popup>
+        <Training
+          arrayOfLetters={this.state.arrayOfLetters}
+          countLetter={this.state.countLetter}
+          letterErr={this.state.letterErr}
+          printSpeed={this.state.printSpeed}
+          countErr={this.state.countErr}
+        ></Training>
       </>
     );
   }
