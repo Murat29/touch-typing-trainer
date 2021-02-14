@@ -85,7 +85,6 @@ class App extends React.Component {
   }
 
   handleStarting(evt) {
-    console.log("dsf");
     evt.target.blur();
     this.setState({ starting: true });
     this.updatePrintSpeed();
