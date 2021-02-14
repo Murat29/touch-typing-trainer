@@ -84,7 +84,9 @@ class App extends React.Component {
     this.setState({ timerId: timerId });
   }
 
-  handleStarting() {
+  handleStarting(evt) {
+    console.log("dsf");
+    evt.target.blur();
     this.setState({ starting: true });
     this.updatePrintSpeed();
     document.addEventListener("keyup", this.handleKeyupBind);

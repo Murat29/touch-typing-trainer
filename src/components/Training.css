@@ -17,6 +17,7 @@
 
 .training__info {
   margin-right: 15px;
+  min-width: 122px;
 }
 
 .training__info-item {
