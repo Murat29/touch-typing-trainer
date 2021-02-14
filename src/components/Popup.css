@@ -43,6 +43,13 @@
   }
 }
 
+.popup__text {
+  margin: 20px 0 0 0;
+  text-align: center;
+  font-size: 24px;
+  line-height: 26px;
+}
+
 .popup__button {
   -webkit-appearance: none;
   -moz-appearance: none;
@@ -60,6 +67,7 @@
   line-height: 44px;
   text-transform: uppercase;
   text-align: center;
+  outline: none;
 }
 
 @media screen and (max-width: 767px) {

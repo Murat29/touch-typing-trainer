@@ -33,6 +33,23 @@
 .training__info-item:nth-of-type(2n) {
   margin-bottom: 15px;
 }
-.training__info-item:last-of-type {
-  margin-bottom: 0;
+
+.training__reset {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-color: #ffffff;
+  padding: 0;
+  margin: 20px 0 0 0;
+  border: none;
+  box-shadow: none;
+  cursor: pointer;
+  color: #7aa514;
+  font-weight: normal;
+  border-radius: 4px;
+  font-size: 20px;
+  line-height: 44px;
+  text-transform: uppercase;
+  text-align: center;
+  outline: none;
 }

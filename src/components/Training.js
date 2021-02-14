@@ -19,14 +19,15 @@ function Training({ arrayOfLetters, countLetter, letterErr, printSpeed, countErr
         <p className="training__info-item">{printSpeed} зн./мин</p>
         <p className="training__info-item">Точность</p>
         <p className="training__info-item">
-          {100 - ((countErr / arrayOfLetters.length) * 100).toFixed(2)} %
+          {100 - ((countErr / arrayOfLetters.length) * 100).toFixed(2) || 100} %
         </p>
         <button
+          className="training__reset"
           onClick={() => {
-            resetTraining(false);
+            resetTraining(true);
           }}
         >
-          Заного
+          Заново
         </button>
       </div>
     </div>
