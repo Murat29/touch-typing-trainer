@@ -12,8 +12,11 @@ class App extends React.Component {
       letterErr: -1,
       arrayOfLetters: testText,
       printSpeed: 0,
+      starting: false,
+      timerId: "",
     };
     this.handleKeyupBind = this.handleKeyup.bind(this);
+    this.handleStarEnd = this.handleStarEnd.bind(this);
   }
 
   handleKeyup(evt) {
@@ -49,14 +52,25 @@ class App extends React.Component {
     }
   }
 
-  handleStarting() {
+  updatePrintSpeed() {
     const startData = new Date();
     let timerId = setInterval(() => {
-      let currentDate = new Date();
+      const currentDate = new Date();
       const printSpeed = Math.round(this.state.countLetter / ((+currentDate - +startData) / 60000));
       this.setState({ printSpeed: printSpeed });
-      console.log(this.state.printSpeed);
     }, 1000);
+    this.setState({ timerId: timerId });
+  }
+
+  handleStarEnd(start) {
+    if (start) {
+      this.setState({ starting: true });
+      console.log(this.state.starting);
+      this.updatePrintSpeed();
+    } else {
+      this.setState({ starting: false, countLetter: 0, countErr: 0, letterErr: -1, printSpeed: 0 });
+      clearInterval(this.state.timerId);
+    }
   }
 
   componentDidMount() {
@@ -80,13 +94,14 @@ class App extends React.Component {
   render() {
     return (
       <>
-        <Popup></Popup>
+        <Popup starting={this.state.starting} handleStarting={this.handleStarEnd}></Popup>
         <Training
           arrayOfLetters={this.state.arrayOfLetters}
           countLetter={this.state.countLetter}
           letterErr={this.state.letterErr}
           printSpeed={this.state.printSpeed}
           countErr={this.state.countErr}
+          resetTraining={this.handleStarEnd}
         ></Training>
       </>
     );

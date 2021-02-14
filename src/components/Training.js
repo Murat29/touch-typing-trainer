@@ -1,6 +1,6 @@
 import "./Training.css";
 import Letter from "./Letter.js";
-function Training({ arrayOfLetters, countLetter, letterErr, printSpeed, countErr }) {
+function Training({ arrayOfLetters, countLetter, letterErr, printSpeed, countErr, resetTraining }) {
   return (
     <div className="training">
       <div className="training__text-container">
@@ -21,6 +21,13 @@ function Training({ arrayOfLetters, countLetter, letterErr, printSpeed, countErr
         <p className="training__info-item">
           {100 - ((countErr / arrayOfLetters.length) * 100).toFixed(2)} %
         </p>
+        <button
+          onClick={() => {
+            resetTraining(false);
+          }}
+        >
+          Заного
+        </button>
       </div>
     </div>
   );
