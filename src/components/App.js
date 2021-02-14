@@ -21,6 +21,43 @@ class App extends React.Component {
     this.resetTraining = this.resetTraining.bind(this);
   }
 
+  componentDidMount() {
+    this.updateArrayOfLetters();
+  }
+
+  updateArrayOfLetters() {
+    fetch("https://baconipsum.com/api/?type=all-meat&paras=1")
+      .then((res) => {
+        if (!res.ok) {
+          return Promise.reject(`Ошибка: ${res.status}`);
+        }
+        return res.json();
+      })
+      .then((res) => {
+        this.setState({ arrayOfLetters: res.join("  ").replace(/\s+/g, " ").split("") });
+      })
+      .catch((err) => {
+        alert(err);
+      });
+  }
+
+  handleStarting(evt) {
+    evt.target.blur();
+    this.setState({ starting: true });
+    this.updatePrintSpeed();
+    document.addEventListener("keyup", this.handleKeyupBind);
+  }
+
+  updatePrintSpeed() {
+    const startData = new Date();
+    let timerId = setInterval(() => {
+      const currentDate = new Date();
+      const printSpeed = Math.round(this.state.countLetter / ((+currentDate - +startData) / 60000));
+      this.setState({ printSpeed: printSpeed });
+    }, 1000);
+    this.setState({ timerId: timerId });
+  }
+
   handleKeyup(evt) {
     if (this.checkKkeyModifier(evt)) return;
 
@@ -28,8 +65,7 @@ class App extends React.Component {
       this.setState({
         isOpenPopupFinish: true,
       });
-      clearInterval(this.state.timerId);
-      document.removeEventListener("keyup", this.handleKeyupBind);
+      this.removeListeners();
       return;
     }
 
@@ -41,8 +77,7 @@ class App extends React.Component {
         letterErr: -1,
         printSpeed: 0,
       });
-      clearInterval(this.state.timerId);
-      document.removeEventListener("keyup", this.handleKeyupBind);
+      this.removeListeners();
       return;
     }
 
@@ -74,23 +109,6 @@ class App extends React.Component {
     }
   }
 
-  updatePrintSpeed() {
-    const startData = new Date();
-    let timerId = setInterval(() => {
-      const currentDate = new Date();
-      const printSpeed = Math.round(this.state.countLetter / ((+currentDate - +startData) / 60000));
-      this.setState({ printSpeed: printSpeed });
-    }, 1000);
-    this.setState({ timerId: timerId });
-  }
-
-  handleStarting(evt) {
-    evt.target.blur();
-    this.setState({ starting: true });
-    this.updatePrintSpeed();
-    document.addEventListener("keyup", this.handleKeyupBind);
-  }
-
   resetTraining(isFetch) {
     if (isFetch) {
       this.updateArrayOfLetters();
@@ -105,24 +123,12 @@ class App extends React.Component {
       letterErr: -1,
       printSpeed: 0,
     });
+    this.removeListeners();
+  }
+
+  removeListeners() {
     clearInterval(this.state.timerId);
-  }
-
-  updateArrayOfLetters() {
-    fetch("https://baconipsum.com/api/?type=all-meat&paras=1")
-      .then((res) => {
-        if (!res.ok) {
-          return `Ошибка: ${res.status}`;
-        }
-        return res.json();
-      })
-      .then((res) => {
-        this.setState({ arrayOfLetters: res.join("  ").replace(/\s+/g, " ").split("") });
-      });
-  }
-
-  componentDidMount() {
-    this.updateArrayOfLetters();
+    document.removeEventListener("keyup", this.handleKeyupBind);
   }
 
   componentWillUnmount() {
@@ -130,6 +136,8 @@ class App extends React.Component {
   }
 
   render() {
+    const accuracy =
+      100 - ((this.state.countErr / this.state.arrayOfLetters.length) * 100).toFixed(2) || 100;
     return (
       <>
         <Popup isOpen={!this.state.starting}>
@@ -151,13 +159,8 @@ class App extends React.Component {
         </Popup>
         <Popup isOpen={this.state.isOpenPopupFinish}>
           <h1 className="popup__title">Ну, неплохо!</h1>
-          <p className="popup__text">Скорость печати: {this.state.printSpeed}</p>
-          <p className="popup__text">
-            Точность:
-            {100 - ((this.state.countErr / this.state.arrayOfLetters.length) * 100).toFixed(2) ||
-              100}
-            %
-          </p>
+          <p className="popup__text">Скорость печати: {this.state.printSpeed} зн./мин</p>
+          <p className="popup__text">Точность: {accuracy} %</p>
           <button
             onClick={() => {
               this.resetTraining(true);
@@ -172,7 +175,7 @@ class App extends React.Component {
           countLetter={this.state.countLetter}
           letterErr={this.state.letterErr}
           printSpeed={this.state.printSpeed}
-          countErr={this.state.countErr}
+          accuracy={accuracy}
           resetTraining={this.resetTraining}
         ></Training>
       </>
