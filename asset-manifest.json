@@ -1,8 +1,8 @@
 {
   "files": {
-    "main.css": "/touch-typing-trainer/static/css/main.ff3f5753.chunk.css",
-    "main.js": "/touch-typing-trainer/static/js/main.0e370ea3.chunk.js",
-    "main.js.map": "/touch-typing-trainer/static/js/main.0e370ea3.chunk.js.map",
+    "main.css": "/touch-typing-trainer/static/css/main.228fc471.chunk.css",
+    "main.js": "/touch-typing-trainer/static/js/main.e6110294.chunk.js",
+    "main.js.map": "/touch-typing-trainer/static/js/main.e6110294.chunk.js.map",
     "runtime-main.js": "/touch-typing-trainer/static/js/runtime-main.7586f4aa.js",
     "runtime-main.js.map": "/touch-typing-trainer/static/js/runtime-main.7586f4aa.js.map",
     "static/js/2.99c49513.chunk.js": "/touch-typing-trainer/static/js/2.99c49513.chunk.js",
@@ -10,13 +10,13 @@
     "static/js/3.558ee467.chunk.js": "/touch-typing-trainer/static/js/3.558ee467.chunk.js",
     "static/js/3.558ee467.chunk.js.map": "/touch-typing-trainer/static/js/3.558ee467.chunk.js.map",
     "index.html": "/touch-typing-trainer/index.html",
-    "static/css/main.ff3f5753.chunk.css.map": "/touch-typing-trainer/static/css/main.ff3f5753.chunk.css.map",
+    "static/css/main.228fc471.chunk.css.map": "/touch-typing-trainer/static/css/main.228fc471.chunk.css.map",
     "static/js/2.99c49513.chunk.js.LICENSE.txt": "/touch-typing-trainer/static/js/2.99c49513.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.7586f4aa.js",
     "static/js/2.99c49513.chunk.js",
-    "static/css/main.ff3f5753.chunk.css",
-    "static/js/main.0e370ea3.chunk.js"
+    "static/css/main.228fc471.chunk.css",
+    "static/js/main.e6110294.chunk.js"
   ]
 }
