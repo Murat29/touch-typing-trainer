@@ -9,7 +9,7 @@
 * JavaScript
 * React
 
-### Используемых API
+### Используемые API
 * [Bacon Ipsum](https://baconipsum.com/json-api/)
 
 ### Инструкциями по развертыванию
